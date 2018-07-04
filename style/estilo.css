@@ -1,0 +1,17 @@
+.celda{
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 30px;
+}
+
+#tablero{
+    text-align: center;
+    background-color: blue;
+    width: 620px;
+    position: fixed;
+    margin-left: 450px;
+    
+}
