@@ -10,7 +10,7 @@ $database_port = "";
 //$database_socket = "";
 //
 // Create connection
-function conecta() {
+function databaseConnect() {
     $errorMessage = "";
     $conn = mysqli_connect($database_host, $database_user, $database_password, $database_database, $database_port);
     if ($conn) {
