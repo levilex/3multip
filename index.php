@@ -1,14 +1,14 @@
 <?php
-include "model.php";
-include "controlador.php";
+require "classes/model.php";
+require "classes/controlador.php";
 ?>
 
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link rel="stylesheet" type="text/css" href="style/estilo.css" media="screen" />
-        <script type="text/javascript" src="libs/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/scripts.js"></script>
     </head>
     <body>

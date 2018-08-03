@@ -1,6 +1,6 @@
 <?php
 
-include 'bbddconnect.php';
+require_once 'dbconnect.php';
 
 if (isset($_POST["ficha"])) {
     $ficha = $_POST["ficha"];
