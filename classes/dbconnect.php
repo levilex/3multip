@@ -1,20 +1,23 @@
 <?php
 
-function conecta() {
-    $servername = "localhost";
-    $database = "3multi";
-    $username = "root";
-    $password = "";
+/* Database conection data */
+$database_host = "";
+$database_user = "";
+$database_password = "";
+$database_name = "";
+$database_port = "";
 
+//$database_socket = "";
+//
 // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+function conecta() {
+    $errorMessage = "";
+    $conn = mysqli_connect($database_host, $database_user, $database_password, $database_database, $database_port);
+    if ($conn) {
+        //echo "Connected successfully";
+        return $conn;
+    } else {
+        $errorMessage = die("Connection failed: " . mysqli_connect_error());
+        return $errorMessage;
     }
-    //echo "Connected successfully";
-
-    return $conn;
 }
-
-
