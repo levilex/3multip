@@ -1,17 +1,21 @@
-.celda{
-    width: 200px;
-    height: 200px;
+body {
+    margin: 0;
+    padding: 0;
+    background: darkgrey;
+    text-align: center;
+}
+.celda {
+    width: 100px;
+    height: 100px;
     background-color: white;
+    color: black;
     border: 1px solid black;
     text-align: center;
     font-size: 30px;
 }
-
-#tablero{
-    text-align: center;
+#tablero {
+    display: inline-block;
+    padding: 0;
+    margin-top: 30px;
     background-color: blue;
-    width: 620px;
-    position: fixed;
-    margin-left: 450px;
-    
 }
