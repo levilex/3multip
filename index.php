@@ -1,5 +1,7 @@
 <?php
 include 'core/controller.php';
+
+session_start();
 ?>
 
 <html>
@@ -31,7 +33,7 @@ include 'core/controller.php';
                 </tr>
             </table> 
         </div>
-        <form id="play" method="post" action="core/controller.php">
+        <form id="play" method="post" action="index.php">
             <fieldset>
                 <legend>Player name</legend>
                 <input name="playerName" type="text">
