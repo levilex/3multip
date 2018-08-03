@@ -17,4 +17,4 @@ $database = "3multip";
 /* Player names table */
 $namesTable = "playernames";
 $idAttr = "rowid";
-$nameAttr = "name";
+$nameAttr = "name"; // VARCHAR 16
