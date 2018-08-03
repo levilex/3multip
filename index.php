@@ -1,6 +1,5 @@
 <?php
-require "classes/model.php";
-require "classes/controlador.php";
+include 'core/controller.php';
 ?>
 
 <html>
@@ -12,6 +11,7 @@ require "classes/controlador.php";
         <script type="text/javascript" src="js/scripts.js"></script>
     </head>
     <body>
+        <h1>3multip</h1>
         <div id="tablero">
             <table>
                 <tr>
@@ -31,5 +31,13 @@ require "classes/controlador.php";
                 </tr>
             </table> 
         </div>
+        <form id="play" method="post" action="core/controller.php">
+            <fieldset>
+                <legend>Player name</legend>
+                <input name="playerName" type="text">
+                <hr>
+                <input name="start" type="submit" value="Start">
+            </fieldset>
+        </form>
     </body>
 </html>
