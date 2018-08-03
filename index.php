@@ -1,7 +1,5 @@
 <?php
 include 'core/controller.php';
-
-session_start();
 ?>
 
 <html>
