@@ -16,6 +16,5 @@ body {
 #tablero {
     display: inline-block;
     padding: 0;
-    margin-top: 40px;
     background-color: blue;
 }
