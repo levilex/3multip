@@ -8,6 +8,7 @@ define("SESS_USER", "user");
 define("RESET", "reset");
 define("REFRESH", "refresh");
 define("TIRAR", "tirar");
+define("ENEMIGO", "enemigo");
 
 $dbConnect = conectarBD();
 
@@ -26,7 +27,10 @@ if (!isset($_SESSION[SESS_USER])) {
                 if ($registered) {
                     $_SESSION[SESS_USER] = $playerName;
                     echo 'REGISTRADO ' . $_SESSION[SESS_USER];
-                    //$enemigos = comprobarJugadores($dbConnect);
+                    $enemigos = comprobarJugadoresCantidad($dbConnect);
+                    if ($enemigos) {
+                        $_SESSION[ENEMIGO] = true;
+                    }
                 } else {
                     //$error = true;
                     //echo 'NO REGISTRA JUGADOR ';
@@ -39,19 +43,6 @@ if (!isset($_SESSION[SESS_USER])) {
     }
 } else {
     echo 'USTED YA SE REGISTRÓ ';
-}
-
-if (isset($_POST[REFRESH])) {
-    if (isset($_SESSION[SESS_USER])) {
-        $enemigos = comprobarJugadoresCantidad($dbConnect);
-        if ($enemigos) {
-            echo 'ENEMIGO AVISTADO ';
-        } else {
-            echo 'ESTÁS SOLA';
-        }
-    } else {
-        echo 'DEBE REGISTRARSE PRIMERO ';
-    }
 }
 
 if (isset($_POST[RESET])) {
@@ -68,14 +59,44 @@ if (isset($_POST[RESET])) {
 }
 
 /*
- * CONTROL DE JUEGO
+ * CONTROL DE JUEGO (FALTA TODO EL JS)
  */
+
+if (isset($_POST[REFRESH])) {
+    if (isset($_SESSION[SESS_USER])) {
+        if (!$_SESSION[ENEMIGO]) {
+            $enemigos = comprobarJugadoresCantidad($dbConnect);
+            if ($enemigos) {
+                $_SESSION[ENEMIGO] = true;
+                echo 'ENEMIGO AVISTADO ';
+            } else {
+                echo 'ESTÁS SOLA';
+            }
+        } else {
+            echo 'HAY ENEMIGO ';
+        }
+    } else {
+        echo 'DEBE REGISTRARSE PRIMERO ';
+    }
+}
+
 if (isset($_POST[TIRAR])) {
     if (isset($_SESSION[SESS_USER])) {
-        if (isset($_POST["A1"])) {
-            //
+        if ($_SESSION[ENEMIGO]) {
+            if (isset($_POST["A1"])) {
+                $jugador = $_SESSION[SESS_USER];
+                $jugada = "A1";
+                $cargaJugada = cargarJugada($dbConnect, $jugador, $jugada);
+                if ($cargaJugada) {
+                    echo 'CARGADO ';
+                } else {
+                    echo 'FALLÓ LA CARGA ';
+                }
+            }
+            unset($_POST[TIRAR]);
+        } else {
+            echo 'TODAVIA NO TIENES ENEMIGO ';
         }
-        unset($_POST[TIRAR]);
     } else {
         echo 'PRIMERO, DEBE REGISTRARSE ';
         unset($_POST[TIRAR]);

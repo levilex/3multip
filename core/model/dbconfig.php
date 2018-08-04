@@ -13,8 +13,13 @@ $database = "3multip";
 /*
  * Database structure 
  */
-
 /* Player names table */
 $namesTable = "playernames";
 $idAttr = "rowid";
 $nameAttr = "name"; // VARCHAR 16
+
+/* Move table */
+$moveTable = "movements";
+$idAttrMove = "rowid";
+$playerMove = "player";
+$moveAttr = "move";

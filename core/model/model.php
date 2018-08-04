@@ -12,6 +12,9 @@ define("PLAYERSTABLE", $namesTable);
 define("PLAYERID", $idAttr);
 define("PLAYERNAME", $nameAttr);
 
+define("MOVETABLE", $moveTable);
+define("MOVE", $moveAttr);
+
 /*
  * Conexión a la base de datos. Devuelve el objeto conexión
  */
@@ -112,6 +115,16 @@ function comprobarJugadoresCantidad($conexion) {
         }
     } else {
         echo 'QUERY ENEMIGOS CAGADA ';
+        return false;
+    }
+}
+
+function cargarJugada($conexion, $jugador, $jugada) {
+    $query = "INSERT INTO " . MOVETABLE . " VALUES (DEFAULT," . "'" .$jugador . "'"  . "," . "'" . $jugada . "');";
+    $queryDone = mysqli_query($conexion, $query);
+    if ($queryDone) {
+        return true;
+    } else {
         return false;
     }
 }
