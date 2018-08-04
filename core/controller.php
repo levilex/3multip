@@ -9,12 +9,7 @@ define("RESET", "reset");
 define("REFRESH", "refresh");
 define("TIRAR", "tirar");
 
-$dbConnect = null;
-$playerName = null;
-$registered = null;
-$error = null;
-$enemigos = null;
-$resetPlayer = null;
+$dbConnect = conectarBD();
 
 /*
  * REGISTRO DEL JUGADOR
@@ -26,7 +21,6 @@ if (!isset($_SESSION[SESS_USER])) {
             echo 'EL NOMBRE NO PUEDE ESTAR VACÍO';
         } else {
             $playerName = $_POST[PLAYER];
-            $dbConnect = conectarBD();
             if ($dbConnect) {
                 $registered = registrarJugador($dbConnect, $playerName);
                 if ($registered) {
@@ -49,7 +43,6 @@ if (!isset($_SESSION[SESS_USER])) {
 
 if (isset($_POST[REFRESH])) {
     if (isset($_SESSION[SESS_USER])) {
-        $dbConnect = conectarBD();
         $enemigos = comprobarJugadoresCantidad($dbConnect);
         if ($enemigos) {
             echo 'ENEMIGO AVISTADO ';
@@ -63,7 +56,6 @@ if (isset($_POST[REFRESH])) {
 
 if (isset($_POST[RESET])) {
     if (isset($_SESSION[SESS_USER])) {
-        $dbConnect = conectarBD();
         $resetPlayer = resetPlayer($dbConnect, $_SESSION[SESS_USER]);
         if ($resetPlayer) {
             session_destroy();
@@ -80,20 +72,14 @@ if (isset($_POST[RESET])) {
  */
 if (isset($_POST[TIRAR])) {
     if (isset($_SESSION[SESS_USER])) {
-        //compruebaCasillas(); //JS
-        echo 'tirada';
+        if (isset($_POST["A1"])) {
+            //
+        }
         unset($_POST[TIRAR]);
     } else {
         echo 'PRIMERO, DEBE REGISTRARSE ';
         unset($_POST[TIRAR]);
     }
-}
-
-/*
- * SEMÁFORO DE ERROR
- */
-if ($error) {
-    imprimirError();
 }
 
 /*
