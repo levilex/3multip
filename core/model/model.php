@@ -27,6 +27,21 @@ function conectarBD() {
 }
 
 /*
+ * Pues eso... un reset
+ */
+
+function resetPlayer($conexion, $nombre) {
+    $deleteName = "DELETE FROM " . PLAYERSTABLE . " WHERE " . PLAYERNAME . " = " . "'" . $nombre . "';";
+    $queryDelete = mysqli_query($conexion, $deleteName);
+    if ($queryDelete) {        
+        echo 'DELETED ';
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * Operaciones relacionadas con el registro de un nuevo jugador
  */
 

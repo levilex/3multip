@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'core/controller.php';
 ?>
 
@@ -13,14 +15,19 @@ include 'core/controller.php';
     <body>
         <h1>3multip</h1>
         <hr>
-        <form id="play" method="post" action="index.php">
-            <fieldset>
+        <fieldset>
+            <form id="play" method="post" action="index.php">
                 <legend>Player name</legend>
                 <input name="playerName" type="text">
                 <hr>
-                <input name="start" type="submit" value="Start">
-            </fieldset>
-        </form>
+                <input name="start" type="submit" value="Start">                        
+            </form>
+            <hr>
+            <form method="post" action="index.php">
+                <input type="submit" name="reset" value="Reset">
+            </form>
+        </fieldset>
+        <br>
         <div id="tablero">
             <table>
                 <tr>
