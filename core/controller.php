@@ -79,10 +79,12 @@ if (isset($_POST[RESET])) {
  * CONTROL DE JUEGO
  */
 if (isset($_POST[TIRAR])) {
-    if (isset($_POST[PLAYER])) {
-        
+    if (isset($_SESSION[SESS_USER])) {
+        //compruebaCasillas(); //JS
+        echo 'tirada';
+        unset($_POST[TIRAR]);
     } else {
-        'PRIMERO, DEBE REGISTRARSE ';
+        echo 'PRIMERO, DEBE REGISTRARSE ';
         unset($_POST[TIRAR]);
     }
 }
