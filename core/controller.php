@@ -3,6 +3,11 @@
 include 'model/model.php';
 
 define("ERROR", "ERROR");
+define("PLAYER", "playerName");
+define("SESS_USER", "user");
+define("RESET", "reset");
+define("REFRESH", "refresh");
+define("TIRAR", "tirar");
 
 $dbConnect = null;
 $playerName = null;
@@ -14,19 +19,19 @@ $resetPlayer = null;
 /*
  * REGISTRO DEL JUGADOR
  */
-if (!isset($_SESSION["user"])) {
-    if (isset($_POST["playerName"])) {
-        if ($_POST["playerName"] == '') {
+if (!isset($_SESSION[SESS_USER])) {
+    if (isset($_POST[PLAYER])) {
+        if ($_POST[PLAYER] == '') {
             //$error = true;
             echo 'EL NOMBRE NO PUEDE ESTAR VACÍO';
         } else {
-            $playerName = $_POST["playerName"];
+            $playerName = $_POST[PLAYER];
             $dbConnect = conectarBD();
             if ($dbConnect) {
                 $registered = registrarJugador($dbConnect, $playerName);
                 if ($registered) {
-                    $_SESSION['user'] = $playerName;
-                    echo 'REGISTRADO ' . $_SESSION["user"];
+                    $_SESSION[SESS_USER] = $playerName;
+                    echo 'REGISTRADO ' . $_SESSION[SESS_USER];
                     //$enemigos = comprobarJugadores($dbConnect);
                 } else {
                     //$error = true;
@@ -42,8 +47,8 @@ if (!isset($_SESSION["user"])) {
     echo 'USTED YA SE REGISTRÓ ';
 }
 
-if (isset($_POST["refresh"])) {
-    if (isset($_SESSION["user"])) {
+if (isset($_POST[REFRESH])) {
+    if (isset($_SESSION[SESS_USER])) {
         $dbConnect = conectarBD();
         $enemigos = comprobarJugadoresCantidad($dbConnect);
         if ($enemigos) {
@@ -56,25 +61,30 @@ if (isset($_POST["refresh"])) {
     }
 }
 
-if (isset($_POST["reset"])) {
-    if (isset($_SESSION["user"])) {
+if (isset($_POST[RESET])) {
+    if (isset($_SESSION[SESS_USER])) {
         $dbConnect = conectarBD();
-        $resetPlayer = resetPlayer($dbConnect, $_SESSION["user"]);
+        $resetPlayer = resetPlayer($dbConnect, $_SESSION[SESS_USER]);
         if ($resetPlayer) {
             session_destroy();
         }
-        unset($_POST["reset"]);
+        unset($_POST[RESET]);
     } else {
         echo 'AÚN NO HA EMPEZADO... ';
-        unset($_POST["reset"]);
+        unset($_POST[RESET]);
     }
 }
 
 /*
  * CONTROL DE JUEGO
  */
-if (isset($_POST["tirar"])) {
-    //
+if (isset($_POST[TIRAR])) {
+    if (isset($_POST[PLAYER])) {
+        
+    } else {
+        'PRIMERO, DEBE REGISTRARSE ';
+        unset($_POST[TIRAR]);
+    }
 }
 
 /*

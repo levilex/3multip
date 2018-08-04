@@ -14,7 +14,6 @@ include 'core/controller.php';
     </head>
     <body>
         <h1>3multip</h1>
-        <hr>
         <fieldset>
             <form id="play" method="post" action="index.php">
                 <legend>Player name</legend>
