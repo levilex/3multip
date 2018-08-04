@@ -32,19 +32,19 @@ include 'core/controller.php';
             <form id="tirar" method="post" action="index.php">
                 <table>
                     <tr>
-                        <td id="A1" class="celda">A1<input id="A1" type="text" size="1" maxlenght="1"></td>
-                        <td id="A2" class="celda">A2<input id="A2" type="text" size="1" maxlenght="1"></td>
-                        <td id="A3" class="celda">A3<input id="A3" type="text" size="1" maxlenght="1"></td>
+                        <td id="A1" class="celda">A1<input id="A1" name="A1" type="text" size="1" maxlenght="1"></td>
+                        <td id="A2" class="celda">A2<input id="A2" name="A2" type="text" size="1" maxlenght="1"></td>
+                        <td id="A3" class="celda">A3<input id="A3" name="A3" type="text" size="1" maxlenght="1"></td>
                     </tr>
                     <tr>
-                        <td id="B1" class="celda">B1<input id="B1" type="text" size="1" maxlenght="1"></td>
-                        <td id="B2" class="celda">B2<input id="B2" type="text" size="1" maxlenght="1"></td>
-                        <td id="B3" class="celda">B3<input id="B3" type="text" size="1" maxlenght="1"></td>
+                        <td id="B1" class="celda">B1<input id="B1" name="B1" type="text" size="1" maxlenght="1"></td>
+                        <td id="B2" class="celda">B2<input id="B2" name="B2" type="text" size="1" maxlenght="1"></td>
+                        <td id="B3" class="celda">B3<input id="B3" name="B3" type="text" size="1" maxlenght="1"></td>
                     </tr>
                     <tr>
-                        <td id="C1" class="celda">C1<input id="C1" type="text" size="1" maxlenght="1"></td>
-                        <td id="C2" class="celda">C2<input id="C2" type="text" size="1" maxlenght="1"></td>
-                        <td id="C3" class="celda">C3<input id="C3" type="text" size="1" maxlenght="1"></td>
+                        <td id="C1" class="celda">C1<input id="C1" name="C1" type="text" size="1" maxlenght="1"></td>
+                        <td id="C2" class="celda">C2<input id="C2" name="C2" type="text" size="1" maxlenght="1"></td>
+                        <td id="C3" class="celda">C3<input id="C3" name="C3" type="text" size="1" maxlenght="1"></td>
                     </tr>
                 </table>
                 <hr>
