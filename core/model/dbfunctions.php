@@ -6,5 +6,6 @@
 
 function extraerCount($datos) {
     $result = mysqli_fetch_array($datos);
+    echo 'COUNT: ' . $result[0] . " ";
     return $result[0];
 }

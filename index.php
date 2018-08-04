@@ -12,6 +12,15 @@ include 'core/controller.php';
     </head>
     <body>
         <h1>3multip</h1>
+        <hr>
+        <form id="play" method="post" action="index.php">
+            <fieldset>
+                <legend>Player name</legend>
+                <input name="playerName" type="text">
+                <hr>
+                <input name="start" type="submit" value="Start">
+            </fieldset>
+        </form>
         <div id="tablero">
             <table>
                 <tr>
@@ -29,15 +38,17 @@ include 'core/controller.php';
                     <td id="C2" class="celda">C2</td>
                     <td id="C3" class="celda">C3</td>
                 </tr>
-            </table> 
+            </table>
         </div>
-        <form id="play" method="post" action="index.php">
-            <fieldset>
-                <legend>Player name</legend>
-                <input name="playerName" type="text">
-                <hr>
-                <input name="start" type="submit" value="Start">
-            </fieldset>
-        </form>
+        <br><br>
+        <fieldset>
+            <form id="tirada" method="post" action="index.php">
+                <input name="tirada" type="submit" value="Tirar">
+            </form>
+            <hr>
+            <form id="refresh" method="post" action="index.php">
+                <input name="refresh" type="submit" value="Actualizar">
+            </form>
+        </fieldset>
     </body>
 </html>

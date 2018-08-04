@@ -8,12 +8,14 @@ $dbConnect;
 $playerName = "";
 $registered = false;
 $error = false;
+$enemigos = false;
 
 /*
  * REGISTRO DEL JUGADOR
  */
 if (isset($_POST["playerName"])) {
     if ($_POST["playerName"] === '') {
+        //$error = true;
         echo 'EL NOMBRE NO PUEDE ESTAR VACÍO';
     } else {
         $playerName = $_POST["playerName"];
@@ -22,14 +24,25 @@ if (isset($_POST["playerName"])) {
             $registered = registrarJugador($dbConnect, $playerName);
             if ($registered) {
                 echo 'REGISTRADO ';
+                //$enemigos = comprobarJugadores($dbConnect);
             } else {
-                $error = true;
-                echo 'NO REGISTRA JUGADOR ';
+                //$error = true;
+                //echo 'NO REGISTRA JUGADOR ';
             }
         } else {
-            $error = true;
+            //$error = true;
             echo 'NO CONECTA BASE ';
         }
+    }
+}
+
+if (isset($_POST["refresh"])) {
+    $dbConnect = conectarBD();
+    $enemigos = comprobarJugadoresCantidad($dbConnect);
+    if ($enemigos) {
+        echo 'ENEMIGO AVISTADO ';
+    } else {
+        echo 'ESTÁS SOLA';
     }
 }
 
