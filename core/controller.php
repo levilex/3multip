@@ -71,6 +71,13 @@ if (isset($_POST["reset"])) {
 }
 
 /*
+ * CONTROL DE JUEGO
+ */
+if (isset($_POST["tirar"])) {
+    //
+}
+
+/*
  * SEMÁFORO DE ERROR
  */
 if ($error) {

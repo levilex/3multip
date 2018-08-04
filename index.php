@@ -29,29 +29,30 @@ include 'core/controller.php';
         </fieldset>
         <br>
         <div id="tablero">
-            <table>
-                <tr>
-                    <td id="A1" class="celda">A1</td>
-                    <td id="A2" class="celda">A2</td>
-                    <td id="A3" class="celda">A3</td>
-                </tr>
-                <tr>
-                    <td id="B1" class="celda">B1</td>
-                    <td id="B2" class="celda">B2</td>
-                    <td id="B3" class="celda">B3</td>
-                </tr>
-                <tr>
-                    <td id="C1" class="celda">C1</td>
-                    <td id="C2" class="celda">C2</td>
-                    <td id="C3" class="celda">C3</td>
-                </tr>
-            </table>
+            <form id="tirar" method="post" action="index.php">
+                <table>
+                    <tr>
+                        <td id="A1" class="celda">A1</td>
+                        <td id="A2" class="celda">A2</td>
+                        <td id="A3" class="celda">A3</td>
+                    </tr>
+                    <tr>
+                        <td id="B1" class="celda">B1</td>
+                        <td id="B2" class="celda">B2</td>
+                        <td id="B3" class="celda">B3</td>
+                    </tr>
+                    <tr>
+                        <td id="C1" class="celda">C1</td>
+                        <td id="C2" class="celda">C2</td>
+                        <td id="C3" class="celda">C3</td>
+                    </tr>
+                </table>
+                <hr>
+                <input name="tirar" type="submit" value="Tirar">
+            </form>
         </div>
         <br><br>
         <fieldset>
-            <form id="tirada" method="post" action="index.php">
-                <input name="tirada" type="submit" value="Tirar">
-            </form>
             <hr>
             <form id="refresh" method="post" action="index.php">
                 <input name="refresh" type="submit" value="Actualizar">
