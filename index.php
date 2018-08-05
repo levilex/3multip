@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+echo 'TEST';
 include 'core/controller.php';
 ?>
 
