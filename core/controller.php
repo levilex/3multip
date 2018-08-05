@@ -1,5 +1,4 @@
 <?php
-echo 'test';
 include 'model/model.php';
 
 define("ERROR", "ERROR");
