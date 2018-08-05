@@ -1,6 +1,6 @@
 <?php
 session_start();
-echo 'GPG sign test';
+
 include 'core/controller.php';
 ?>
 
