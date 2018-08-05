@@ -30,6 +30,16 @@ if (!isset($_SESSION[SESS_USER])) {
                     $enemigos = comprobarJugadoresCantidad($dbConnect);
                     if ($enemigos) {
                         $_SESSION[ENEMIGO] = true;
+                        $lastPlayer = buscarUltimo($dbConnect, $playerName);  
+                        if ($lastPlayer != false) {
+                            if ($lastPlayer != $_SESSION[SESS_USER]) {
+                                echo 'Empiezas tu! ';
+                            } else {
+                                //echo 'Empieza el otro. ';
+                            }
+                        } else {
+                            echo 'EMPIEZA TU ENEMIGO ';
+                        }
                     }
                 } else {
                     //$error = true;
@@ -65,7 +75,7 @@ if (isset($_POST[RESET])) {
 
 if (isset($_POST[REFRESH])) {
     if (isset($_SESSION[SESS_USER])) {
-        if (!$_SESSION[ENEMIGO]) {
+        if (!isset($_SESSION[ENEMIGO])) {
             $enemigos = comprobarJugadoresCantidad($dbConnect);
             if ($enemigos) {
                 $_SESSION[ENEMIGO] = true;
@@ -83,7 +93,7 @@ if (isset($_POST[REFRESH])) {
 
 if (isset($_POST[TIRAR])) {
     if (isset($_SESSION[SESS_USER])) {
-        if ($_SESSION[ENEMIGO]) {
+        if (isset($_SESSION[ENEMIGO])) {
             //$salida = salirPrimero($dbConnect, $jugador);
             $_SESSION[TURNO] = 1;
             if (isset($_POST["A1"])) {

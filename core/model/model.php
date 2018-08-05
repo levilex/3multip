@@ -112,6 +112,7 @@ function comprobarNombre($conexion, $nombre) {
 
 /*
  * Comprueba cuántos jugadores hay ya registrados
+ * Retorna TRUE si hay 2, false si no
  */
 
 function comprobarJugadoresCantidad($conexion) {
@@ -143,12 +144,17 @@ function cargarJugada($conexion, $jugador, $jugada) {
     }
 }
 
-function salirPrimero($conexion, $jugador) {
-    $query = "SELECT " . PLAYERNAME . " FROM " . PLAYERSTABLE . " ORDER BY ASC LIMIT 1;";
+function buscarUltimo($conexion, $jugador) {
+    $query = "SELECT " . PLAYERNAME . " FROM " . PLAYERSTABLE . " ORDER BY " . PLAYERNAME . " DESC LIMIT 1;";
     $queryDone = mysqli_query($conexion, $query);
     if ($queryDone) {
         $dato = extraerCount($queryDone);
-        echo "EL DATO ES: " . $dato;
+        if ($dato == $jugador) {            
+            echo "EL DATO ES: " . $dato;  
+            return $dato;
+        } else {
+            return false;
+        }   
     } else {
         echo 'ERROR DE CARGA ';
         return false;

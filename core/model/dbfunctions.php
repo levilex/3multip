@@ -9,3 +9,9 @@ function extraerCount($datos) {
     //echo 'COUNT: ' . $result[0] . " ";
     return $result[0];
 }
+
+function extraerDato($datos) {
+    $result = mysqli_fetch_row($datos);
+    //echo 'DATO: ' . $result[0];
+    return $result[0];
+}
