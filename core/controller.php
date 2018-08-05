@@ -9,6 +9,7 @@ define("RESET", "reset");
 define("REFRESH", "refresh");
 define("TIRAR", "tirar");
 define("ENEMIGO", "enemigo");
+define("TURNO", "turno");
 
 $dbConnect = conectarBD();
 
@@ -48,6 +49,7 @@ if (!isset($_SESSION[SESS_USER])) {
 if (isset($_POST[RESET])) {
     if (isset($_SESSION[SESS_USER])) {
         $resetPlayer = resetPlayer($dbConnect, $_SESSION[SESS_USER]);
+        echo 'DELELED: ' . $_SESSION[SESS_USER];
         if ($resetPlayer) {
             session_destroy();
         }
@@ -83,10 +85,13 @@ if (isset($_POST[REFRESH])) {
 if (isset($_POST[TIRAR])) {
     if (isset($_SESSION[SESS_USER])) {
         if ($_SESSION[ENEMIGO]) {
+            //$salida = salirPrimero($dbConnect, $jugador);
+            $_SESSION[TURNO] = 1;
             if (isset($_POST["A1"])) {
                 $jugador = $_SESSION[SESS_USER];
                 $jugada = "A1";
                 $cargaJugada = cargarJugada($dbConnect, $jugador, $jugada);
+                $_SESSION[TURNO]++;
                 if ($cargaJugada) {
                     echo 'CARGADO ';
                 } else {

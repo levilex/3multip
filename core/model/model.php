@@ -36,8 +36,22 @@ function conectarBD() {
 function resetPlayer($conexion, $nombre) {
     $deleteName = "DELETE FROM " . PLAYERSTABLE . " WHERE " . PLAYERNAME . " = " . "'" . $nombre . "';";
     $queryDelete = mysqli_query($conexion, $deleteName);
-    if ($queryDelete) {        
-        echo 'DELETED ';
+    $movesDelete = resetMoves($conexion);
+    if (($queryDelete) && ($movesDelete)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Trunca la tabla de movimientos
+ */
+
+function resetMoves($conexion) {
+    $deleteName = "TRUNCATE TABLE " . MOVETABLE . ";";
+    $queryDelete = mysqli_query($conexion, $deleteName);
+    if ($queryDelete) {
         return true;
     } else {
         return false;
@@ -120,11 +134,23 @@ function comprobarJugadoresCantidad($conexion) {
 }
 
 function cargarJugada($conexion, $jugador, $jugada) {
-    $query = "INSERT INTO " . MOVETABLE . " VALUES (DEFAULT," . "'" .$jugador . "'"  . "," . "'" . $jugada . "');";
+    $query = "INSERT INTO " . MOVETABLE . " VALUES (DEFAULT," . "'" . $jugador . "'" . "," . "'" . $jugada . "');";
     $queryDone = mysqli_query($conexion, $query);
     if ($queryDone) {
         return true;
     } else {
+        return false;
+    }
+}
+
+function salirPrimero($conexion, $jugador) {
+    $query = "SELECT " . PLAYERNAME . " FROM " . PLAYERSTABLE . " ORDER BY ASC LIMIT 1;";
+    $queryDone = mysqli_query($conexion, $query);
+    if ($queryDone) {
+        $dato = extraerCount($queryDone);
+        echo "EL DATO ES: " . $dato;
+    } else {
+        echo 'ERROR DE CARGA ';
         return false;
     }
 }
