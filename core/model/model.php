@@ -14,6 +14,7 @@ define("PLAYERNAME", $nameAttr);
 
 define("MOVETABLE", $moveTable);
 define("MOVE", $moveAttr);
+define("TURN", $turnAttr);
 
 /*
  * Conexión a la base de datos. Devuelve el objeto conexión
@@ -134,8 +135,12 @@ function comprobarJugadoresCantidad($conexion) {
     }
 }
 
-function cargarJugada($conexion, $jugador, $jugada) {
-    $query = "INSERT INTO " . MOVETABLE . " VALUES (DEFAULT," . "'" . $jugador . "'" . "," . "'" . $jugada . "');";
+/*
+ * 
+ */
+
+function cargarJugada($conexion, $jugador, $jugada, $turno) {
+    $query = "INSERT INTO " . MOVETABLE . " VALUES (DEFAULT," . "'" . $jugador . "'" . "," . "'" . $jugada . "', '" . $turno . "');";
     $queryDone = mysqli_query($conexion, $query);
     if ($queryDone) {
         return true;
@@ -144,19 +149,42 @@ function cargarJugada($conexion, $jugador, $jugada) {
     }
 }
 
+/*
+ * 
+ */
+
 function buscarUltimo($conexion, $jugador) {
-    $query = "SELECT " . PLAYERNAME . " FROM " . PLAYERSTABLE . " ORDER BY " . PLAYERNAME . " DESC LIMIT 1;";
+    $query = "SELECT " . PLAYERNAME . " FROM " . PLAYERSTABLE . " ORDER BY " . PLAYERID . " DESC LIMIT 1;";
     $queryDone = mysqli_query($conexion, $query);
     if ($queryDone) {
-        $dato = extraerCount($queryDone);
-        if ($dato == $jugador) {            
-            echo "EL DATO ES: " . $dato;  
-            return $dato;
+        $dato = extraerDato($queryDone);
+        if ($dato == $jugador) {
+            echo "EL DATO ES: " . $dato;
+            return true;
         } else {
             return false;
-        }   
+        }
     } else {
         echo 'ERROR DE CARGA ';
         return false;
     }
+}
+
+/*
+ * 
+ */
+
+function comprobarTiradaEnemiga($conexion, $nombre, $turno) {
+    $query = "SELECT " . MOVE . " FROM " . MOVETABLE . " WHERE " . PLAYERNAME . 
+            " NOT LIKE " . "'" . $nombre . "' AND " . TURN . " = " . $turno . 
+            " ORDER BY " . TURN . " DESC LIMIT 1;";
+    $queryDone = mysqli_query($conexion, $query);
+    if ($queryDone) {
+        $dato = extraerDato($queryDone);
+        if ($dato) {
+            return $dato;
+        } else {
+            return null;
+        }
+    } return false;
 }

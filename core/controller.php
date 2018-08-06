@@ -1,6 +1,8 @@
 <?php
+
 include 'model/model.php';
 
+define("DBCONNECT", "dbConnect");
 define("ERROR", "ERROR");
 define("PLAYER", "playerName");
 define("SESS_USER", "user");
@@ -9,8 +11,10 @@ define("REFRESH", "refresh");
 define("TIRAR", "tirar");
 define("ENEMIGO", "enemigo");
 define("TURNO", "turno");
+define("TURNO_ENEMIGO", "turnoEnemigo");
+define("PRIMERO", "primero");
 
-$dbConnect = conectarBD();
+$_SESSION[DBCONNECT] = conectarBD();
 
 /*
  * REGISTRO DEL JUGADOR
@@ -22,23 +26,16 @@ if (!isset($_SESSION[SESS_USER])) {
             echo 'EL NOMBRE NO PUEDE ESTAR VACÍO';
         } else {
             $playerName = $_POST[PLAYER];
-            if ($dbConnect) {
-                $registered = registrarJugador($dbConnect, $playerName);
+            if ($_SESSION[DBCONNECT]) {
+                $registered = registrarJugador($_SESSION[DBCONNECT], $playerName);
                 if ($registered) {
                     $_SESSION[SESS_USER] = $playerName;
                     echo 'REGISTRADO ' . $_SESSION[SESS_USER];
-                    $enemigos = comprobarJugadoresCantidad($dbConnect);
-                    if ($enemigos) {
+                    $buscarEnemigos = comprobarJugadoresCantidad($_SESSION[DBCONNECT]);
+                    if ($buscarEnemigos) {
                         $_SESSION[ENEMIGO] = true;
-                        $lastPlayer = buscarUltimo($dbConnect, $playerName);  
-                        if ($lastPlayer != false) {
-                            if ($lastPlayer != $_SESSION[SESS_USER]) {
-                                echo 'Empiezas tu! ';
-                            } else {
-                                //echo 'Empieza el otro. ';
-                            }
-                        } else {
-                            echo 'EMPIEZA TU ENEMIGO ';
+                        if (!isset($_SESSION[TURNO])) {
+                            $turnos = gestionarTurnos($_SESSION[DBCONNECT], $playerName);
                         }
                     }
                 } else {
@@ -52,13 +49,13 @@ if (!isset($_SESSION[SESS_USER])) {
         }
     }
 } else {
-    echo 'USTED YA SE REGISTRÓ ';
+    echo 'USTED YA SE REGISTRÓ: ' . $_SESSION[SESS_USER];
 }
 
 if (isset($_POST[RESET])) {
     if (isset($_SESSION[SESS_USER])) {
-        $resetPlayer = resetPlayer($dbConnect, $_SESSION[SESS_USER]);
-        echo 'DELELED: ' . $_SESSION[SESS_USER];
+        $resetPlayer = resetPlayer($_SESSION[DBCONNECT], $_SESSION[SESS_USER]);
+        echo 'DELETED: ' . $_SESSION[SESS_USER];
         if ($resetPlayer) {
             session_destroy();
         }
@@ -76,15 +73,16 @@ if (isset($_POST[RESET])) {
 if (isset($_POST[REFRESH])) {
     if (isset($_SESSION[SESS_USER])) {
         if (!isset($_SESSION[ENEMIGO])) {
-            $enemigos = comprobarJugadoresCantidad($dbConnect);
-            if ($enemigos) {
+            $buscarEnemigos = comprobarJugadoresCantidad($_SESSION[DBCONNECT]);
+            if ($buscarEnemigos) {
                 $_SESSION[ENEMIGO] = true;
+                $turnos = gestionarTurnos($_SESSION[DBCONNECT], $_SESSION[SESS_USER]);
                 echo 'ENEMIGO AVISTADO ';
             } else {
                 echo 'ESTÁS SOLA';
             }
         } else {
-            echo 'HAY ENEMIGO ';
+            accionEnemiga();
         }
     } else {
         echo 'DEBE REGISTRARSE PRIMERO ';
@@ -94,27 +92,63 @@ if (isset($_POST[REFRESH])) {
 if (isset($_POST[TIRAR])) {
     if (isset($_SESSION[SESS_USER])) {
         if (isset($_SESSION[ENEMIGO])) {
-            //$salida = salirPrimero($dbConnect, $jugador);
-            $_SESSION[TURNO] = 1;
-            if (isset($_POST["A1"])) {
-                $jugador = $_SESSION[SESS_USER];
-                $jugada = "A1";
-                $cargaJugada = cargarJugada($dbConnect, $jugador, $jugada);
-                $_SESSION[TURNO]++;
-                if ($cargaJugada) {
-                    echo 'CARGADO ';
+            if (!isset($_SESSION[TURNO])) {
+                $turnos = gestionarTurnos($_SESSION[DBCONNECT], $_SESSION[SESS_USER]);
+            } else {
+                if ($_SESSION[TURNO] == 1) {
+                    if ($_SESSION[PRIMERO]) {
+                        if (isset($_POST["A1"])) {
+                            $cargaJugada = cargarJugada($_SESSION[DBCONNECT], $_SESSION[SESS_USER], $_POST["A1"], $_SESSION[TURNO]);
+                            if ($cargaJugada) {
+                                echo ' CARGADA ';
+                                $_SESSION[TURNO] ++;
+                            } else {
+                                echo 'FALLÓ LA CARGA ';
+                            }
+                        }
+                    } else {
+                        accionEnemiga();
+                    }
                 } else {
-                    echo 'FALLÓ LA CARGA ';
+                    //
                 }
             }
-            unset($_POST[TIRAR]);
         } else {
             echo 'TODAVIA NO TIENES ENEMIGO ';
         }
     } else {
         echo 'PRIMERO, DEBE REGISTRARSE ';
-        unset($_POST[TIRAR]);
     }
+    unset($_POST[TIRAR]);
+}
+
+/*
+ * Comprueba si el enemigo ha tirado, y qué ha tirado
+ */
+
+function accionEnemiga() {
+    $tiradaEnemiga = comprobarTiradaEnemiga($_SESSION[DBCONNECT], $_SESSION[SESS_USER], $_SESSION[TURNO]);
+    if ($tiradaEnemiga) {
+        echo 'EL ENEMIGO HA TIRADO: ' . $tiradaEnemiga;
+    } else {
+        echo 'EL ENEMIGO TODAVÍA NO HA TIRADO...';
+    }
+}
+
+/*
+ * Gestión de turnos
+ */
+
+function gestionarTurnos($dbConnect, $playerName) {
+    $lastPlayer = buscarUltimo($dbConnect, $playerName);
+    if ($lastPlayer) {
+        $_SESSION[PRIMERO] = false;
+        echo 'EMPIEZA EL OTRO ';
+    } else {
+        $_SESSION[PRIMERO] = true;
+        echo 'EMPIEZAS TU ';
+    }
+    $_SESSION[TURNO] = 1;
 }
 
 /*
