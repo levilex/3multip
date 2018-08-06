@@ -23,3 +23,4 @@ $moveTable = "movements";
 $idAttrMove = "rowid";
 $playerMove = "player";
 $moveAttr = "move";
+$turnAttr = "turn";
