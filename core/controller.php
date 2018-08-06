@@ -14,6 +14,8 @@ define("TURNO", "turno");
 define("TURNO_ENEMIGO", "turnoEnemigo");
 define("PRIMERO", "primero");
 
+$dbConnect = conectarBD();
+
 $_SESSION[DBCONNECT] = conectarBD();
 
 /*
@@ -31,6 +33,7 @@ if (!isset($_SESSION[SESS_USER])) {
                 if ($registered) {
                     $_SESSION[SESS_USER] = $playerName;
                     echo 'REGISTRADO ' . $_SESSION[SESS_USER];
+                    $buscarEnemigos = comprobarJugadoresCantidad($_SESSION[DBCONNECT]); //
                     $buscarEnemigos = comprobarJugadoresCantidad($_SESSION[DBCONNECT]);
                     if ($buscarEnemigos) {
                         $_SESSION[ENEMIGO] = true;
