@@ -5,7 +5,7 @@
  */
 $host = "sql205.unaux.com";
 $user = "unaux_22506538";
-$password = "esmegma#88"; /* ERASE BEFORE COMMIT */
+$password = "esmegma#88";
 $database = "unaux_22506538_3multip";
 //$port = "";
 //$socket = "";
